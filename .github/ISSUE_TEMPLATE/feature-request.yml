@@ -1,9 +1,9 @@
-# yaml-language-server: $schema=https://json.schemastore.org/github-issue-forms.json
+# yaml-language-server: $schema=https://www.schemastore.org/github-issue-forms.json
 # https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests/syntax-for-githubs-form-schema
 ---
 name: 🚀 Feature request
 description: Suggest an idea for this project 🏖
-title: '🚀 [feature]: '
+title: "🚀 [feature]: "
 labels: [enhancement]
 body:
   - type: markdown
@@ -45,7 +45,7 @@ body:
     id: terms
     attributes:
       label: 🔰 Code of Conduct
-      description: By submitting this issue, you agree to follow our [`Code of Conduct`](https://github.com/raven-actions/publish-and-tag/blob/main/.github/CODE_OF_CONDUCT.md)
+      description: By submitting this issue, you agree to follow our [`Code of Conduct`](../blob/main/.github/CODE_OF_CONDUCT.md)
       options:
         - label: I agree to follow this project's Code of Conduct.
           required: true

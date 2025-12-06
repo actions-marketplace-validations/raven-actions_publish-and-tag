@@ -1,6 +1,7 @@
-import getMakeLatest from '../src/lib/get-make-latest'
-import {generateToolkit} from './helpers'
-import {Toolkit} from 'actions-toolkit'
+import getMakeLatest from '../src/get-make-latest.js'
+import { generateToolkit } from './helpers.js'
+import { Toolkit } from 'actions-toolkit'
+import { jest } from '@jest/globals'
 
 describe('get-make-latest', () => {
   let tools: Toolkit
@@ -35,6 +36,6 @@ describe('get-make-latest', () => {
 
   it('not bool value', () => {
     process.env.INPUT_LATEST = 'test'
-    expect(() => getMakeLatest(tools)).toThrowError('latest is not valid bool value!')
+    expect(() => getMakeLatest(tools)).toThrow('latest is not valid bool value!')
   })
 })

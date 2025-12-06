@@ -1,6 +1,12 @@
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import jsYaml from 'js-yaml'
+
+// Import Jest types for globals
+import '@jest/globals'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /**
  * Helper that reads the `action.yml` and includes the default values
@@ -8,7 +14,7 @@ import jsYaml from 'js-yaml'
  */
 function getDefaultValues(): object {
   const actionManifest = fs.readFileSync(path.resolve(__dirname, '../action.yml'), 'utf8')
-  const {inputs} = jsYaml.load(actionManifest) as any
+  const { inputs } = jsYaml.load(actionManifest) as any
   return Object.keys(inputs).reduce(
     (sum, key) => ({
       ...sum,

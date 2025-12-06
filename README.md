@@ -1,9 +1,11 @@
+<!-- cSpell:ignore mheap -->
 # 🚀🔖 Publish and Tag Action
 
 [![GitHub - marketplace](https://img.shields.io/badge/marketplace-publish--and--tag-blue?logo=github&style=flat-square)](https://github.com/marketplace/actions/publish-and-tag)
 [![GitHub - release](https://img.shields.io/github/v/release/raven-actions/publish-and-tag?style=flat-square)](https://github.com/raven-actions/publish-and-tag/releases/latest)
 [![GitHub - ci](https://img.shields.io/github/actions/workflow/status/raven-actions/publish-and-tag/ci.yml?logo=github&label=CI&style=flat-square&branch=main&event=push)](https://github.com/raven-actions/publish-and-tag/actions/workflows/ci.yml?query=branch%3Amain+event%3Apush)
 [![GitHub - license](https://img.shields.io/github/license/raven-actions/publish-and-tag?style=flat-square)](https://github.com/raven-actions/publish-and-tag/blob/main/LICENSE)
+[![Codecov](https://img.shields.io/codecov/c/github/raven-actions/publish-and-tag/main?logo=codecov&style=flat-square&token=VxxCGXH3R5)](https://codecov.io/github/raven-actions/publish-and-tag)
 
 ---
 
@@ -42,7 +44,7 @@ A [GitHub Action](https://github.com/features/actions) for properly publishing a
 
 > This repository even uses it! `@vercel/ncc` supports TypeScript out of the box 😍 So, no need to include your `dist/` in the git.
 
-The two important things you'll need to set in your action are the `main` field and the `build` script. Here's an example of a minimal `package.json` that will use `@vercel/ncc` to compile your action to `dist/index.js`, and update your `action.yml` or `action.yaml` file to use the `node16` runtime, and point `publish-and-tag` action at the compiled file.
+The two important things you'll need to set in your action are the `main` field and the `build` script. Here's an example of a minimal `package.json` that will use `@vercel/ncc` to compile your action to `dist/index.js`, and update your `action.yml` or `action.yaml` file to use the `node20` runtime, and point `publish-and-tag` action at the compiled file.
 
 Example `package.json` for your project:
 
@@ -120,16 +122,16 @@ jobs:
         run: npm run build
 
       - name: Publish and Tag Action
-        uses: raven-actions/publish-and-tag@v1
+        uses: raven-actions/publish-and-tag@v2
 ```
 
 ### Additional configuration
 
 You can also use this action with other events - you'll need to specify a `tag_name` (see [📥 Inputs](#-inputs) section below).
 
-Optionally you can set the `files` property in your `package.json` with the list of the additional files that should be included in your release. Yes, it supports `globs`!
+Optionally you can set the `files` property in your `package.json` with the list of the additional files that should be included in your release. Yes, it supports `globs`! Supports via [minimatch](https://github.com/isaacs/minimatch#features).
 
-In the `files`, you do not have to include action manifest files (`action.yml` / `action.yaml`) or file pointed into `main`. Both are included by default. Nothing wrong will happen if any of those files are included in the files, for example, with globs. publish-and-tag action will filter it.
+In the `files`, you do not have to include action manifest files (`action.yml` / `action.yaml`) or file pointed into `main`. Both are included by default. Nothing wrong will happen if any of those files are included in the files, for example, with globs. `publish-and-tag` action will filter it.
 
 ```json
 {

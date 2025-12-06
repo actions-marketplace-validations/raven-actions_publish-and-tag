@@ -1,4 +1,3 @@
-import {Toolkit} from 'actions-toolkit'
-import publishAndTagAction from './lib'
+import { run } from './main.js'
 
-Toolkit.run(publishAndTagAction, {})
+run()

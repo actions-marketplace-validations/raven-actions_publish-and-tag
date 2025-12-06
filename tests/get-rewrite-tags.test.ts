@@ -1,6 +1,7 @@
-import getRewriteTags from '../src/lib/get-rewrite-tags'
-import {generateToolkit} from './helpers'
-import {Toolkit} from 'actions-toolkit'
+import getRewriteTags from '../src/get-rewrite-tags.js'
+import { generateToolkit } from './helpers.js'
+import { Toolkit } from 'actions-toolkit'
+import { jest } from '@jest/globals'
 
 describe('get-rewrite-tags', () => {
   let tools: Toolkit
@@ -35,6 +36,6 @@ describe('get-rewrite-tags', () => {
 
   it('not bool value', () => {
     process.env.INPUT_REWRITE_TAGS = 'test'
-    expect(() => getRewriteTags(tools)).toThrowError('rewrite_tags is not valid bool value!')
+    expect(() => getRewriteTags(tools)).toThrow('rewrite_tags is not valid bool value!')
   })
 })

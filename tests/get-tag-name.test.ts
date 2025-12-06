@@ -1,6 +1,7 @@
-import getTagName from '../src/lib/get-tag-name'
-import {generateToolkit} from './helpers'
-import {Toolkit} from 'actions-toolkit'
+import getTagName from '../src/get-tag-name.js'
+import { generateToolkit } from './helpers.js'
+import { Toolkit } from 'actions-toolkit'
+import { jest } from '@jest/globals'
 
 describe('update-tag', () => {
   let tools: Toolkit
@@ -27,6 +28,6 @@ describe('update-tag', () => {
 
   it('gets the tag from the release payload', () => {
     tools.context.event = 'pizza'
-    expect(() => getTagName(tools)).toThrowError('No tag_name was found or provided!')
+    expect(() => getTagName(tools)).toThrow('No tag_name was found or provided!')
   })
 })

@@ -1,16 +1,31 @@
 {
-  "extends": "@tsconfig/node16/tsconfig.json",
+  "$schema": "https://www.schemastore.org/tsconfig",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "es2018",
-    "module": "commonjs",
-    "outDir": "./lib",
-    "strict": true,
-    "noImplicitAny": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "lib": [
+      "ES2022"
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "outDir": "./dist",
+    "noEmit": true,
+    "types": [
+      "jest"
+    ]
   },
   "exclude": [
-    "node_modules"
+    "__fixtures__",
+    "__tests__",
+    "fixtures",
+    "tests",
+    "coverage",
+    "dist",
+    "**/node_modules/**"
+  ],
+  "include": [
+    "src"
   ]
 }

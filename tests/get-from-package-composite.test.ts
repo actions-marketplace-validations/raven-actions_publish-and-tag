@@ -1,8 +1,11 @@
 import path from 'path'
-import * as core from '@actions/core'
-import {generateToolkit} from './helpers'
-import {Toolkit} from 'actions-toolkit'
-import {getMainFromPackage, getFilesFromPackage} from '../src/lib/get-from-package'
+import { fileURLToPath } from 'url'
+import { generateToolkit } from './helpers.js'
+import { Toolkit } from 'actions-toolkit'
+import { getMainFromPackage, getFilesFromPackage } from '../src/get-from-package.js'
+import { jest } from '@jest/globals'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 describe('get-from-package (Composite Action)', () => {
   let tools: Toolkit
@@ -18,19 +21,19 @@ describe('get-from-package (Composite Action)', () => {
   })
 
   it('main', async () => {
-    jest.spyOn(tools, 'getPackageJSON').mockReturnValueOnce({main: 'composite'})
+    jest.spyOn(tools, 'getPackageJSON').mockReturnValueOnce({ main: 'composite' })
     const result = await getMainFromPackage(tools)
     expect(result).toBe('composite')
   })
 
   it('files - only main', async () => {
-    jest.spyOn(tools, 'getPackageJSON').mockReturnValueOnce({main: 'composite'})
+    jest.spyOn(tools, 'getPackageJSON').mockReturnValueOnce({ main: 'composite' })
     const result = await getFilesFromPackage(tools)
     expect(result.files).toHaveLength(0)
   })
 
   it('files - only additional files', async () => {
-    jest.spyOn(tools, 'getPackageJSON').mockReturnValueOnce({files: ['entrypoint.sh']})
+    jest.spyOn(tools, 'getPackageJSON').mockReturnValueOnce({ files: ['entrypoint.sh'] })
     const result = await getFilesFromPackage(tools)
     expect(result.files).toHaveLength(1)
     expect(result.files?.some((obj: any) => obj === 'entrypoint.sh')).toBeTruthy()
@@ -46,7 +49,7 @@ describe('get-from-package (Composite Action)', () => {
     expect(result.files).toHaveLength(4)
     expect(result.files?.some((obj: any) => obj === 'main.js')).toBeTruthy()
     expect(result.files?.some((obj: any) => obj === 'entrypoint.sh')).toBeTruthy()
-    expect(result.files?.some((obj: any) => obj === core.toPlatformPath('configs/config.yaml'))).toBeTruthy()
-    expect(result.files?.some((obj: any) => obj === core.toPlatformPath('configs/config.yml'))).toBeTruthy()
+    expect(result.files?.some((obj: any) => obj === 'configs/config.yaml')).toBeTruthy()
+    expect(result.files?.some((obj: any) => obj === 'configs/config.yml')).toBeTruthy()
   })
 })

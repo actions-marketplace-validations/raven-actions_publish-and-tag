@@ -1,7 +1,8 @@
 import nock from 'nock'
-import {Toolkit} from 'actions-toolkit'
-import publishAndTagAction from '../src/lib'
-import {generateToolkit} from './helpers'
+import { Toolkit } from 'actions-toolkit'
+import { action } from '../src/main.js'
+import { generateToolkit } from './helpers.js'
+import { jest } from '@jest/globals'
 
 describe('publish-and-tag', () => {
   let tools: Toolkit
@@ -28,15 +29,15 @@ describe('publish-and-tag', () => {
       .patch('/repos/raven-actions/test/git/refs/tags%2Fv1.2')
       .reply(200)
       .get('/repos/raven-actions/test/git/matching-refs/tags%2Fv1')
-      .reply(200, [{ref: 'tags/v1'}])
+      .reply(200, [{ ref: 'tags/v1' }])
       .get('/repos/raven-actions/test/git/matching-refs/tags%2Fv1.2')
-      .reply(200, [{ref: 'tags/v1.2'}])
+      .reply(200, [{ ref: 'tags/v1.2' }])
       .post('/repos/raven-actions/test/git/commits')
-      .reply(200, {commit: {sha: '123abc'}})
+      .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/raven-actions/test/git/trees')
       .reply(200)
 
-    await publishAndTagAction(tools)
+    await action(tools)
 
     expect(nock.isDone()).toBeTruthy()
   })
@@ -53,11 +54,11 @@ describe('publish-and-tag', () => {
       .get('/repos/raven-actions/test/git/matching-refs/tags%2Fv1.2')
       .reply(200, [])
       .post('/repos/raven-actions/test/git/commits')
-      .reply(200, {commit: {sha: '123abc'}})
+      .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/raven-actions/test/git/trees')
       .reply(200)
 
-    await publishAndTagAction(tools)
+    await action(tools)
 
     expect(nock.isDone()).toBeTruthy()
   })
@@ -67,13 +68,13 @@ describe('publish-and-tag', () => {
       .patch('/repos/raven-actions/test/git/refs/tags%2Fv1.2.3')
       .reply(200)
       .post('/repos/raven-actions/test/git/commits')
-      .reply(200, {commit: {sha: '123abc'}})
+      .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/raven-actions/test/git/trees')
       .reply(200)
 
     tools.context.payload.release.draft = true
 
-    await publishAndTagAction(tools)
+    await action(tools)
 
     expect(nock.isDone()).toBeTruthy()
   })
@@ -83,13 +84,13 @@ describe('publish-and-tag', () => {
       .patch('/repos/raven-actions/test/git/refs/tags%2Fv1.2.3')
       .reply(200)
       .post('/repos/raven-actions/test/git/commits')
-      .reply(200, {commit: {sha: '123abc'}})
+      .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/raven-actions/test/git/trees')
       .reply(200)
 
     tools.context.payload.release.prerelease = true
 
-    await publishAndTagAction(tools)
+    await action(tools)
 
     expect(nock.isDone()).toBeTruthy()
   })
@@ -106,14 +107,14 @@ describe('publish-and-tag', () => {
       .get('/repos/raven-actions/test/git/matching-refs/tags%2Fv2.0')
       .reply(200, [])
       .post('/repos/raven-actions/test/git/commits')
-      .reply(200, {commit: {sha: '123abc'}})
+      .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/raven-actions/test/git/trees')
       .reply(200)
 
     tools.context.event = 'pull_request'
     process.env.INPUT_TAG_NAME = 'v2.0.0'
 
-    await publishAndTagAction(tools)
+    await action(tools)
 
     expect(nock.isDone()).toBeTruthy()
   })
@@ -133,11 +134,11 @@ describe('publish-and-tag', () => {
       .patch('/repos/raven-actions/test/git/refs/tags%2Fv1.2')
       .reply(200)
       .get('/repos/raven-actions/test/git/matching-refs/tags%2Fv1')
-      .reply(200, [{ref: 'tags/v1'}])
+      .reply(200, [{ ref: 'tags/v1' }])
       .get('/repos/raven-actions/test/git/matching-refs/tags%2Fv1.2')
-      .reply(200, [{ref: 'tags/v1.2'}])
+      .reply(200, [{ ref: 'tags/v1.2' }])
       .post('/repos/raven-actions/test/git/commits')
-      .reply(200, {commit: {sha: '123abc'}})
+      .reply(200, { commit: { sha: '123abc' } })
       .post('/repos/raven-actions/test/git/trees')
       .reply(200)
 
@@ -145,7 +146,7 @@ describe('publish-and-tag', () => {
     tools.context.payload.release.prerelease = true
     process.env.INPUT_LATEST = 'true'
 
-    await publishAndTagAction(tools)
+    await action(tools)
     expect(params.make_latest).toBeTruthy()
     expect(nock.isDone()).toBeTruthy()
   })
