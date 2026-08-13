@@ -8,30 +8,30 @@
     "Jason Etcovitch"
   ],
   "dependencies": {
-    "@actions/core": "^2.0.2",
-    "@actions/github": "^7.0.0",
-    "@actions/glob": "^0.5.0",
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1",
+    "@actions/glob": "^0.7.0",
     "@octokit/rest": "^22.0.1",
-    "semver": "^7.7.3"
+    "semver": "^7.8.5"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
-    "@tsconfig/node24": "^24.0.3",
+    "@eslint/js": "^10.0.1",
+    "@tsconfig/node24": "^24.0.4",
     "@types/js-yaml": "^4.0.9",
-    "@types/node": "^24.10.8",
-    "@types/semver": "^7.7.1",
+    "@types/node": "^26.2.0",
+    "@types/semver": "^7.8.0",
     "@types/signale": "^1.4.7",
-    "@vitest/coverage-v8": "^4.0.17",
-    "esbuild": "^0.27.2",
-    "eslint": "^9.39.2",
+    "@vitest/coverage-v8": "^4.1.10",
+    "esbuild": "^0.28.2",
+    "eslint": "^10.8.1",
     "eslint-config-prettier": "^10.1.8",
-    "globals": "^17.0.0",
-    "js-yaml": "^4.1.1",
-    "prettier": "^3.7.4",
-    "syncpack": "^13.0.4",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "8.53.0",
-    "vitest": "^4.0.17"
+    "globals": "^17.9.0",
+    "js-yaml": "^5.2.3",
+    "prettier": "^3.9.6",
+    "syncpack": "^15.3.2",
+    "typescript": "^7.0.2",
+    "typescript-eslint": "8.66.0",
+    "vitest": "^4.1.10"
   },
   "files": [
     "dist/*",
@@ -47,8 +47,8 @@
     "tag"
   ],
   "license": "MIT",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
   "private": true,
   "repository": "raven-actions/publish-and-tag.git",
   "scripts": {
@@ -62,7 +62,7 @@
     "format": "syncpack format && prettier --config ./.github/linters/.prettierrc.yml --write \"**/*.{ts,mts,cts,tsx,js,mjs,cjs,jsx,json,jsonc}\"",
     "lint": "eslint . --config ./.github/linters/eslint.config.mjs",
     "package": "node esbuild.config.mjs",
-    "run": "node dist/index.js",
+    "run": "node dist/index.mjs",
     "run:dev": "node --import tsx ./src/index.ts",
     "run:local": "pnpm dlx @github/local-action . src/main.ts .env",
     "test": "vitest run",
